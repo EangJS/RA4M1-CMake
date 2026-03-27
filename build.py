@@ -58,21 +58,6 @@ def configure_cmake():
 def build_project():
     run(["ninja"], cwd=BUILD_DIR)
 
-# ===========================
-# Step 3: Generate .bin and .hex
-# ===========================
-def generate_binary_files():
-    elf_file = os.path.join(BUILD_DIR, "ra4m1_project.elf")
-    bin_file = os.path.join(BUILD_DIR, "ra4m1_project.bin")
-    hex_file = os.path.join(BUILD_DIR, "ra4m1_project.hex")
-
-    run(["arm-none-eabi-objcopy", "-O", "binary", elf_file, bin_file])
-    run(["arm-none-eabi-objcopy", "-O", "ihex", elf_file, hex_file])
-    print(f"Generated: {bin_file}, {hex_file}")
-
-# ===========================
-# Step 4 (Optional): Flash with J-Link
-# ===========================
 def flash_with_jlink():
     elf_file = os.path.join(BUILD_DIR, "ra4m1_project.elf")
     jlink_cmds = f"""
@@ -92,14 +77,17 @@ exit
 # Main Automation
 # ===========================
 if __name__ == "__main__":
-    if len(sys.argv) > 1 and sys.argv[1].lower() == "clean":
-        clean_build()
-        sys.exit(0)
+    if len(sys.argv) > 1:
+        if sys.argv[1].lower() == "clean":
+            clean_build()
+            sys.exit(0)
+        elif sys.argv[1].lower() == "flash":
+            flash_with_jlink()
+            sys.exit(0)
 
     ensure_build_dir()
     configure_cmake()
     build_project()
-    generate_binary_files()
     
     # Uncomment to flash automatically
     # flash_with_jlink()

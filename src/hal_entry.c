@@ -1,4 +1,5 @@
 #include "hal_data.h"
+#include "SEGGER_RTT.h"
 
 FSP_CPP_HEADER
 void R_BSP_WarmStart(bsp_warm_start_event_t event);
@@ -10,10 +11,13 @@ FSP_CPP_FOOTER
  **********************************************************************************************************************/
 void hal_entry(void)
 {
-    /* TODO: add your own code here */
+    uint32_t i = 0;
     while (1)
     {
-        /* Do nothing */
+        SEGGER_RTT_printf(0, "%d: Hello World!\n", i++);
+        for (volatile int i = 0; i < 1000000; i++){
+            asm volatile ("nop");
+        }
     }
 
 #if BSP_TZ_SECURE_BUILD

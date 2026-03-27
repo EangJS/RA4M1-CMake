@@ -6,11 +6,12 @@ set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/script/fsp.ld)
 file(GLOB_RECURSE SOURCES
     "src/hal_entry.c"
     "ra_gen/*.c"
-    "fsp/src/*.c"
     "ra/**/*.c"
 )
 
 add_executable(${PROJECT_NAME}.elf ${SOURCES})
+
+add_subdirectory(vendor)
 
 target_include_directories(${PROJECT_NAME}.elf PRIVATE
     ${CMAKE_SOURCE_DIR}/ra/fsp/inc
@@ -30,8 +31,14 @@ target_compile_definitions(${PROJECT_NAME}.elf PRIVATE
 )
 
 target_compile_options(${PROJECT_NAME}.elf PRIVATE
-    -g          # Generate debug info
-    -O0         # Disable optimization (makes debugging easier)
+    -g
+    -Os
+    -Wall
+    -Werror
+)
+
+target_link_libraries(${PROJECT_NAME}.elf PRIVATE
+    SEGGER::RTT
 )
 
 target_link_options(${PROJECT_NAME}.elf PRIVATE
@@ -40,7 +47,7 @@ target_link_options(${PROJECT_NAME}.elf PRIVATE
 )
 
 add_custom_command(TARGET ${PROJECT_NAME}.elf POST_BUILD
-    COMMAND arm-none-eabi-objcopy -O binary
+    COMMAND arm-none-eabi-objcopy -O ihex
             ${PROJECT_NAME}.elf
-            ${PROJECT_NAME}.bin
+            ${PROJECT_NAME}.hex
 )
