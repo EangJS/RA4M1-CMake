@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "hal_data.h"
 #include "SEGGER_RTT.h"
 
@@ -15,6 +16,7 @@ void hal_entry(void)
     while (1)
     {
         SEGGER_RTT_printf(0, "%d: Hello World!\n", i++);
+        printf("SWO World!\n");
         for (volatile int i = 0; i < 1000000; i++){
             asm volatile ("nop");
         }
