@@ -12,11 +12,11 @@ FSP_CPP_FOOTER
  **********************************************************************************************************************/
 void hal_entry(void)
 {
-    uint32_t i = 0;
+    volatile uint32_t i = 0;
     while (1)
     {
         SEGGER_RTT_printf(0, "%d: Hello World!\n", i++);
-        printf("SWO World!\n");
+        printf("%ld: SWO World!\n", i);
         for (volatile int i = 0; i < 1000000; i++){
             asm volatile ("nop");
         }

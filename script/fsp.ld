@@ -579,13 +579,14 @@ SECTIONS
     {
         . = ALIGN(8);
         __HeapBase = .;
+        . = . + 16K; /* heap size */
         /* Place the STD heap here. */
         KEEP(*(.heap))
         __HeapLimit = .;
     } > RAM
 
     /* Stacks are stored in this section. */
-    .stack_dummy (NOLOAD):
+    .stack (NOLOAD):
     {
         . = ALIGN(8);
         __StackLimit = .;
