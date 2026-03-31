@@ -112,6 +112,10 @@ void DebugMon_Handler(void) WEAK_REF_ATTRIBUTE;
 void PendSV_Handler(void) WEAK_REF_ATTRIBUTE;
 void SysTick_Handler(void) WEAK_REF_ATTRIBUTE;
 
+extern void vPortSVCHandler(void);
+extern void xPortPendSVHandler(void);
+extern void xPortSysTickHandler(void);
+
 /* Vector table. */
 BSP_DONT_REMOVE const exc_ptr_t __Vectors[BSP_CORTEX_VECTOR_TABLE_ENTRIES] BSP_PLACE_IN_SECTION(
     BSP_SECTION_FIXED_VECTORS) =
@@ -127,11 +131,11 @@ BSP_DONT_REMOVE const exc_ptr_t __Vectors[BSP_CORTEX_VECTOR_TABLE_ENTRIES] BSP_P
     0,                                                         /*      Reserved                  */
     0,                                                         /*      Reserved                  */
     0,                                                         /*      Reserved                  */
-    SVC_Handler,                                               /*      SVCall Handler            */
+    vPortSVCHandler,                                               /*      SVCall Handler            */
     DebugMon_Handler,                                          /*      Debug Monitor Handler     */
     0,                                                         /*      Reserved                  */
-    PendSV_Handler,                                            /*      PendSV Handler            */
-    SysTick_Handler,                                           /*      SysTick Handler           */
+    xPortPendSVHandler,                                            /*      PendSV Handler            */
+    xPortSysTickHandler,                                           /*      SysTick Handler           */
 };
 
 /** @} (end addtogroup BSP_MCU) */

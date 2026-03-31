@@ -269,6 +269,7 @@ void SystemInit (void)
      * projects because SCB_NS->VTOR is set by the secure project before the non-secure project runs. */
     SCB->VTOR = (uint32_t) &__Vectors;
 #endif
+    SCB->VTOR = (uint32_t) &__Vectors;
 
 #if !BSP_TZ_CFG_SKIP_INIT && !BSP_CFG_SKIP_INIT
  #if BSP_FEATURE_BSP_VBATT_HAS_VBTCR1_BPWSWSTP

@@ -1,3 +1,6 @@
 [submodule "vendor/SEGGER_RTT"]
 	path = vendor/SEGGER_RTT
 	url = git@github.com:SEGGERMicro/RTT.git
+[submodule "vendor/FreeRTOS-Kernel"]
+	path = vendor/FreeRTOS-Kernel
+	url = https://github.com/FreeRTOS/FreeRTOS-Kernel.git

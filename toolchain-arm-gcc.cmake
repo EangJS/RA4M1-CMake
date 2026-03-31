@@ -7,7 +7,7 @@ set(CMAKE_CXX_COMPILER arm-none-eabi-g++)
 
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
-set(MCPU_FLAGS "-mcpu=cortex-m4 -mthumb")
+set(MCPU_FLAGS "-mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard")
 
 set(CMAKE_C_FLAGS "${MCPU_FLAGS} -ffunction-sections -fdata-sections")
 set(CMAKE_ASM_FLAGS "${MCPU_FLAGS}")
